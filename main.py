@@ -6,7 +6,6 @@ from scipy.io.wavfile import write as write_wav
 # download and load all models
 preload_models()
 
-# play text in notebook
 app = Flask(__name__)
 
 @app.route("/", methods=["POST"])
