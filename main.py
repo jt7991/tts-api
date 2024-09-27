@@ -1,10 +1,21 @@
-from flask import Flask
+from melo.api import TTS
 from flask import request
-from bark import SAMPLE_RATE, generate_audio, preload_models
-from scipy.io.wavfile import write as write_wav
+from flask import Flask
+import nltk
+nltk.download('averaged_perceptron_tagger_eng')
 
-# download and load all models
-preload_models()
+# Speed is adjustable
+speed = 1.0
+
+# CPU is sufficient for real-time inference.
+# You can set it manually to 'cpu' or 'cuda' or 'cuda:0' or 'mps'
+device = 'auto' # Will automatically use GPU if available
+
+# English 
+model = TTS(language='EN', device=device)
+speaker_ids = model.hps.data.spk2id
+
+output_path = 'en-us.wav'
 
 app = Flask(__name__)
 
@@ -12,7 +23,5 @@ app = Flask(__name__)
 def process_text():
     text = request.get_json()["text"]
     print(text)
-    audio_array = generate_audio(text)
-
-    write_wav("bark_generation.wav", SAMPLE_RATE, audio_array)
-    return audio_array
+    model.tts_to_file(text, speaker_ids['EN-Default'], output_path, speed=speed)
+    return output_path
