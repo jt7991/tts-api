@@ -49,3 +49,7 @@ def process_text():
     # Generate the file URL
     file_url = minio_client.presigned_get_object("tts", output_path_minio)
     return file_url
+    
+@app.route("/health", methods=['GET'])
+def healthcheck():
+    return "healthy!"
