@@ -40,7 +40,7 @@ def process_text():
     )
 
     uuid_str = str(uuid.uuid4())
-    text = request.get_json()["text"]
+    text = request.form['text']
     
 
     output_path_minio = uuid_str + '.wav'

@@ -1,6 +1,6 @@
 <!doctype html>
-<form method="post" action="/">
-    <label for="text">Text to convert to speech</label>
+<script src="https://unpkg.com/htmx.org@2.0.0"></script>
+<form hx-post='/' hx-swap="outerHTML">
     <textarea name="text" id="text" rows="4" cols="50"></textarea>
     <input type="submit" value="Submit">
 </form>
