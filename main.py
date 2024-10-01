@@ -2,6 +2,7 @@ from melo.api import TTS
 import os
 import uuid
 from flask import request
+from flask import render_template
 from flask import Flask
 from minio import Minio, S3Error
 from dotenv import load_dotenv
@@ -50,6 +51,10 @@ def process_text():
     file_url = minio_client.presigned_get_object("tts", output_path_minio)
     return file_url
     
+@app.route("/", methods=["GET"])
+def get_form():
+    return render_template("home.html")
+
 @app.route("/health", methods=['GET'])
 def healthcheck():
     return "healthy!"
