@@ -27,7 +27,7 @@ app = Flask(__name__)
 
 @app.route("/", methods=["POST"])
 def process_text():
-    tts(request.form['text'])
+    return tts(request.form['text'])
 
 @app.route("/parse-url", methods=["POST"])
 def parse_url():
