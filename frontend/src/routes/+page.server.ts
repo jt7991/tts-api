@@ -9,6 +9,7 @@ export const actions: Actions = {
     const formData = new FormData();
     formData.set('text', content);
     const response = await fetch(TTS_SERVICE_URL, { method: 'POST', body: formData });
-    return response;
+
+    return response.json();
   }
 };
