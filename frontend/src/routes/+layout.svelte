@@ -5,6 +5,6 @@
 
 <Header></Header>
 
-<main>
+<main class="h-full w-full">
   <slot></slot>
 </main>

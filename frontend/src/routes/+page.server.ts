@@ -1,4 +1,5 @@
 import { TTS_SERVICE_URL } from '$env/static/private';
+// @ts-ignore
 import Parser from '@postlight/parser';
 import type { Actions } from '@sveltejs/kit';
 export const actions: Actions = {
