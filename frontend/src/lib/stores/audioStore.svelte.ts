@@ -1,15 +1,8 @@
 import dayjs from '$lib/dayjs';
-
-type Track = {
-	mediaUrl: string;
-	url: string;
-	title: string;
-	id: string;
-};
-
+import type { Article } from '$lib/server/db/schemas/articles';
 class AudioStore {
-	trackList = $state<Track[]>([]);
-	#playingTrack = $state<Track | null>(null);
+	trackList = $state<Article[]>([]);
+	#playingTrack = $state<Article | null>(null);
 	get playingTrack() {
 		return this.#playingTrack;
 	}
@@ -17,7 +10,7 @@ class AudioStore {
 	set playingTrack(value) {
 		this.#playingTrack = value;
 		if (this.#player) {
-			this.#player.src = value?.mediaUrl || '';
+			this.#player.src = value?.audio_url || '';
 		}
 	}
 

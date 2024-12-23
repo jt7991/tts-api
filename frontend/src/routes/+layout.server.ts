@@ -1,21 +1,16 @@
-import { getTestFile } from '$lib/server/storage';
+import { db } from '$lib/server/db';
+import { eq } from 'drizzle-orm';
+import { articleTable } from '$lib/server/db/schemas/articles';
 import type { LayoutServerLoad } from './$types';
 
-export const load: LayoutServerLoad = async () => {
+export const load: LayoutServerLoad = async (event) => {
+	const userId = event.locals.user?.id;
+	if (!userId) {
+		return { articles: [] };
+	}
+
+	const articles = await db.select().from(articleTable).where(eq(articleTable.userId, userId));
 	return {
-		tracks: [
-			{
-				title: 'Foo',
-				url: 'google.com/foo',
-				mediaUrl: await getTestFile(),
-				id: '12345'
-			},
-			{
-				title: 'The Fuzz',
-				url: 'google.com/thefuzz',
-				mediaUrl: 'https://www.google.com',
-				id: '1234'
-			}
-		]
+		articles
 	};
 };

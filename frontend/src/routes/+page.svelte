@@ -26,7 +26,7 @@
 						class={classNames(
 							'w-full cursor-pointer flex-col gap-0 p-4 text-left hover:bg-neutral-200',
 							{
-								'bg-neutral-200': item?.url === audioStore.playingTrack?.url
+								'bg-neutral-200': item?.id === audioStore.playingTrack?.id
 							}
 						)}
 						onclick={() => {
@@ -34,7 +34,7 @@
 						}}
 					>
 						<h3 class="bold text-sm">{item.title}</h3>
-						<h4 class="text-xs">{item.url}</h4>
+						<h4 class="text-xs">{item.web_url}</h4>
 					</button>
 				</li>
 			{/each}

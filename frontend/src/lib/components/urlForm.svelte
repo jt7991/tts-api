@@ -4,6 +4,7 @@
 	import { enhance } from '$app/forms';
 	import { Label } from '$lib/components/ui/label';
 	import { XIcon } from 'lucide-svelte';
+	import { invalidateAll } from '$app/navigation';
 	let isLoading = $state(false);
 	let { onClose }: { onClose: () => void } = $props();
 </script>
@@ -17,10 +18,15 @@
 	<form
 		method="POST"
 		class="flex flex-col gap-3 px-4 pt-4"
+		action="/api/article"
 		use:enhance={async () => {
 			isLoading = true;
 			return ({ update }) => {
-				update().finally(() => (isLoading = false));
+				update().finally(async () => {
+					isLoading = false;
+					await invalidateAll();
+					onClose();
+				});
 			};
 		}}
 	>

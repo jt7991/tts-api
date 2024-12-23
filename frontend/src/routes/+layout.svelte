@@ -3,11 +3,10 @@
 	import '../app.css';
 	import AudioPlayer from '$lib/components/AudioPlayer.svelte';
 	import { audioStore } from '$lib/stores/audioStore.svelte';
-	import { onMount } from 'svelte';
 
-	const { data } = $props();
-	onMount(() => {
-		audioStore.trackList = data.tracks;
+	const { data, children } = $props();
+	$effect(() => {
+		audioStore.trackList = data.articles;
 	});
 </script>
 
@@ -15,5 +14,5 @@
 
 <main class="h-full w-full">
 	<AudioPlayer />
-	<slot></slot>
+	{@render children()}
 </main>
