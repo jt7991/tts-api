@@ -13,7 +13,7 @@
 	<div
 		class="flex h-12 w-full items-center justify-between border bg-white p-2 text-center shadow-black"
 	>
-		<p>Fizzy shit app</p>
+		<p>CUM! 👍</p>
 		<Button variant="ghost" class="p-2" onclick={() => (isAddModalShown = true)}>
 			<PlusIcon />
 		</Button>
