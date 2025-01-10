@@ -7,5 +7,5 @@ export const google = new Google(
 	env.GOOGLE_CLIENT_SECRET || '',
 	dev
 		? 'http://localhost:6969/login/google/callback'
-		: 'http://tts-new.jakeystikiroom.com/login/google/callback'
+		: 'https://tts-new.jakeystikiroom.com/login/google/callback'
 );
