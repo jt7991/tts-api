@@ -3,6 +3,12 @@ import type { Article } from '$lib/server/db/schemas/articles';
 class AudioStore {
 	trackList = $state<Article[]>([]);
 	#playingTrack = $state<Article | null>(null);
+	#playbackTime: number = $state(0);
+	#player: HTMLAudioElement | null = $state(null);
+	#duration: number = $state(0);
+	isPaused = $state(true);
+	#playbackRate = $state(1);
+
 	get playingTrack() {
 		return this.#playingTrack;
 	}
@@ -14,15 +20,12 @@ class AudioStore {
 		}
 	}
 
-	#playbackTime: number = $state(0);
 	get playbackTime() {
 		return this.#playbackTime;
 	}
 
 	durationString = $derived(this.secondsToTime(this.duration));
 	playbackTimeString = $derived(this.secondsToTime(this.playbackTime));
-
-	#player: HTMLAudioElement | null = $state(null);
 
 	get player(): HTMLAudioElement | null {
 		return this.#player;
@@ -40,6 +43,7 @@ class AudioStore {
 		this.#player = player;
 		this.#player.onloadedmetadata = () => {
 			this.#duration = this.#player?.duration || 0;
+			this.#player!.playbackRate = this.#playbackRate;
 			return this.play();
 		};
 		this.#player.ondurationchange = () => {
@@ -53,12 +57,9 @@ class AudioStore {
 		};
 	}
 
-	#duration: number = $state(0);
 	get duration() {
 		return this.#duration;
 	}
-
-	isPaused = $state(true);
 
 	pause() {
 		return this.#player?.pause();
@@ -95,6 +96,19 @@ class AudioStore {
 		}
 
 		this.player.currentTime = val * 0.01 * this.duration;
+	}
+
+	set playbackRate(val: number) {
+		if (!this.player) {
+			return;
+		}
+
+		this.player.playbackRate = val;
+		this.#playbackRate = val;
+	}
+
+	get playbackRate() {
+		return this.#playbackRate;
 	}
 
 	private secondsToTime(seconds: number) {
